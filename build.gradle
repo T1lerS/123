@@ -11,13 +11,8 @@ base {
 }
 
 repositories {
-    // No extra repositories needed
-}
-
-fabricApi {
-    configureDataGeneration {
-        client = true
-    }
+    mavenCentral()
+    maven { url = "https://maven.fabricmc.net/" }
 }
 
 dependencies {
@@ -25,13 +20,10 @@ dependencies {
     mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-
-    // NO CLOTH CONFIG - keeping it simple!
 }
 
 processResources {
     inputs.property "version", project.version
-
     filesMatching("fabric.mod.json") {
         expand "version": inputs.properties.version
     }
@@ -49,10 +41,7 @@ java {
 
 jar {
     inputs.property "archivesName", project.base.archivesName
-
-    from("LICENSE") {
-        rename { "${it}_${inputs.properties.archivesName}"}
-    }
+    from("LICENSE") { rename { "${it}_${inputs.properties.archivesName}" } }
 }
 
 publishing {
@@ -62,7 +51,8 @@ publishing {
             from components.java
         }
     }
-
     repositories {
+        // Add a target when ready, e.g. local or remote Maven
+        // maven { url = uri("file://${project.buildDir}/repo") }
     }
 }

@@ -1,6 +1,25 @@
 {
   "category.obbyclient": "ObbyClient",
-  "key.obbyclient.opengui": "Open Auto Clicker GUI",
   "key.obbyclient.toggle": "Toggle Auto Clicker",
-  "key.obbyclient.debug": "Show Debug Stats"
+  "key.obbyclient.toggle_cps": "Toggle CPS (legacy)",
+  "key.obbyclient.increase_cps": "Increase CPS",
+  "key.obbyclient.decrease_cps": "Decrease CPS",
+  "key.obbyclient.open_gui": "Open ObbyClient Config",
+
+  "screen.obbyclient.title": "ObbyClient Config",
+  "screen.obbyclient.enable": "Enable Clicker",
+  "screen.obbyclient.disable": "Disable Clicker",
+  "screen.obbyclient.hold_only_on": "Only While Holding: ON",
+  "screen.obbyclient.hold_only_off": "Only While Holding: OFF",
+  "screen.obbyclient.human_timing_on": "Humanized Timing: ON",
+  "screen.obbyclient.human_timing_off": "Humanized Timing: OFF",
+  "screen.obbyclient.cps": "CPS",
+  "screen.obbyclient.cps_value": "CPS: %s",
+  "screen.obbyclient.miss": "Miss Chance",
+  "screen.obbyclient.miss_value": "Miss Chance: %s",
+  "screen.obbyclient.jitter": "Jitter Chance",
+  "screen.obbyclient.jitter_value": "Jitter Chance: %s",
+  "screen.obbyclient.drift_period": "Drift Period (s)",
+  "screen.obbyclient.drift_period_value": "Drift Period: %s",
+  "screen.obbyclient.done": "Done"
 }

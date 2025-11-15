@@ -1,5 +1,6 @@
 package net.bnkr.obby.autoclicker;
 
+import net.bnkr.obby.gui.ConfigScreen;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.option.KeyBinding;
@@ -9,9 +10,10 @@ import org.lwjgl.glfw.GLFW;
 
 public class KeybindHandler {
     private static KeyBinding toggleKey;
-    private static KeyBinding cpsToggleKey;
+    private static KeyBinding cpsToggleKey; // kept for compatibility; toggles GUI state
     private static KeyBinding cpsUpKey;
     private static KeyBinding cpsDownKey;
+    private static KeyBinding openGuiKey;
 
     public static void register() {
         toggleKey = KeyBindingHelper.registerKeyBinding(new KeyBinding(
@@ -22,32 +24,38 @@ public class KeybindHandler {
         ));
 
         cpsToggleKey = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-                "Toggle CPS Display",
+                "key.obbyclient.toggle_cps",
                 InputUtil.Type.KEYSYM,
                 GLFW.GLFW_KEY_RIGHT_SHIFT,
                 "category.obbyclient"
         ));
 
         cpsUpKey = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-                "Increase CPS",
+                "key.obbyclient.increase_cps",
                 InputUtil.Type.KEYSYM,
                 GLFW.GLFW_KEY_EQUAL,
                 "category.obbyclient"
         ));
 
         cpsDownKey = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-                "Decrease CPS",
+                "key.obbyclient.decrease_cps",
                 InputUtil.Type.KEYSYM,
                 GLFW.GLFW_KEY_MINUS,
                 "category.obbyclient"
         ));
 
-        ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            // Toggle auto clicker on/off
-            while (toggleKey.wasPressed()) {
-                AutoClickerConfig config = AutoClickerConfig.getInstance();
-                config.enabled = !config.enabled;
+        openGuiKey = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+                "key.obbyclient.open_gui",
+                InputUtil.Type.KEYSYM,
+                GLFW.GLFW_KEY_G,
+                "category.obbyclient"
+        ));
 
+        ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            AutoClickerConfig config = AutoClickerConfig.getInstance();
+
+            while (toggleKey.wasPressed()) {
+                config.enabled = !config.enabled;
                 if (client.player != null) {
                     client.player.sendMessage(
                             Text.literal("§7[Auto Clicker] " +
@@ -58,25 +66,20 @@ public class KeybindHandler {
                 }
             }
 
-            // Toggle CPS display
+            // Legacy: toggle flag; no HUD anymore
             while (cpsToggleKey.wasPressed()) {
-                AutoClickerConfig config = AutoClickerConfig.getInstance();
                 config.cpsDisplayEnabled = !config.cpsDisplayEnabled;
-
                 if (client.player != null) {
                     client.player.sendMessage(
-                            Text.literal("§7[CPS Display] " +
-                                    (config.cpsDisplayEnabled ? "§aON" : "§cOFF")),
+                            Text.literal("§7[CPS HUD] " +
+                                    (config.cpsDisplayEnabled ? "§aON (legacy flag)" : "§cOFF (legacy flag)")),
                             true
                     );
                 }
             }
 
-            // Increase CPS
             while (cpsUpKey.wasPressed()) {
-                AutoClickerConfig config = AutoClickerConfig.getInstance();
-                config.targetCPS = Math.min(20.0, config.targetCPS + 1.0);
-
+                config.targetCPS = Math.min(config.maxCPS, config.targetCPS + 1.0);
                 if (client.player != null) {
                     client.player.sendMessage(
                             Text.literal("§7[CPS] §f" + String.format("%.1f", config.targetCPS)),
@@ -85,17 +88,18 @@ public class KeybindHandler {
                 }
             }
 
-            // Decrease CPS
             while (cpsDownKey.wasPressed()) {
-                AutoClickerConfig config = AutoClickerConfig.getInstance();
-                config.targetCPS = Math.max(1.0, config.targetCPS - 1.0);
-
+                config.targetCPS = Math.max(config.minCPS, config.targetCPS - 1.0);
                 if (client.player != null) {
                     client.player.sendMessage(
                             Text.literal("§7[CPS] §f" + String.format("%.1f", config.targetCPS)),
                             true
                     );
                 }
+            }
+
+            while (openGuiKey.wasPressed()) {
+                client.setScreen(new ConfigScreen(client.currentScreen));
             }
         });
     }

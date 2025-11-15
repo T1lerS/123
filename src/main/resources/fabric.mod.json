@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
   "id": "obbyclient",
-  "version": "1.0.0",
+  "version": "${version}",
   "name": "ObbyClient Auto Clicker",
   "description": "Humanized auto clicker for anticheat testing",
-  "authors": ["You"],
+  "authors": ["Bnkr"],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://github.com/Bnkr/obbyclient",
+    "sources": "https://github.com/Bnkr/obbyclient"
   },
   "license": "CC0-1.0",
   "icon": "assets/obbyclient/icon.png",
@@ -27,6 +27,6 @@
     "fabricloader": ">=0.17.3",
     "minecraft": "~1.21.8",
     "java": ">=21",
-    "fabric-api": "*"
+    "fabric-api": ">=0.136.0+1.21.8"
   }
 }
