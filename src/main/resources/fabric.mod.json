@@ -1,0 +1,37 @@
+{
+	"schemaVersion": 1,
+	"id": "obbyclient",
+	"version": "${0.0.1}",
+	"name": "ObbyClient",
+	"description": "MinecraftQol!",
+	"authors": [
+		"Me!"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/obbyclient/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"net.bnkr.obby.ObbyClient"
+		],
+		"fabric-datagen": [
+			"net.bnkr.obby.ObbyClientDataGenerator"
+		]
+	},
+	"mixins": [
+		"obbyclient.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.17.3",
+		"minecraft": "~1.21.8",
+		"java": ">=21",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
